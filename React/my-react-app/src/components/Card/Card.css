@@ -1,0 +1,8 @@
+.card-container {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 3 / 2;
+    border: 1px solid red;
+    overflow: scroll;
+}
+

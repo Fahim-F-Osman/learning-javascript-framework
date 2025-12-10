@@ -20,7 +20,7 @@ Simpler, SEO friendly, reloads entire page on navigation and slower interaction.
 
 ### Class Components (Earlier Version)
 - Used in older codebases.
-- [Resource For Class Components](https://www.w3schools.com/react/react_class.asp)
+- [Resource For Learning Class Components](https://www.w3schools.com/react/react_class.asp)
 
 ### Function Components
 - JavaScript Function returning JSX (HTML-like syntax inside JavaScript).
@@ -100,3 +100,77 @@ npm install
 npm run dev
 ```
 ---
+
+## React Component - Props
+
+Props allow you to pass data from a parent component to a child component.
+
+```js
+// src/components/Card.jsx
+function Card( { name, description } ) {
+  return (
+    <div className="card">
+      <h2>{name}</h2> <p>{description}</p>
+    </div>
+  );
+}
+
+// src/App.jsx
+function App() {
+  return (
+    <div>
+      <Card name="Card Name" description="This is a card" />
+    </div>
+  );
+}
+```
+
+### React Component - Children
+
+The special `children` prop lets you pass nested elements into a component.
+
+It allows you to create wrapper components like:
+- Layouts
+- Modals
+- Cards
+- Tooltips
+- Reusable containers
+- Navigation bars
+
+```js
+// src/components/Card.jsx
+function Card({ children }) {
+  return (
+    <div style={{ border: "1px solid #000", padding: "1rem", margin: "0.5rem" }}>
+      {children}
+    </div>
+  );
+}
+
+// src/App.jsx
+<Card>
+  <h2>Hi!</h2>
+  <p>Content from App.jsx</p>
+</Card>
+```
+### Looping through Arrays
+- `key` prop: React uses it to track elements efficiently. 
+- Must be unique.
+
+```js
+const cardData = [
+  { id: 1, title: "Card 1" },
+  { id: 2, title: "Card 2" },
+  { id: 3, title: "Card 3" },
+];
+
+function App() {
+  return (
+    <div>
+      {cardData.map((card) => (
+        <Card key={card.id} title={card.title}  />
+      ))}
+    </div>
+  );
+}
+```
