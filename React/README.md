@@ -237,3 +237,33 @@ const [message, setMessage] = useState("Hi");
   <p>Preview: {text}</p>
 </div>
 ```
+
+---
+
+## Hooks
+In React hooks allow functions to have access to state and other React features without using classes.
+
+### Side Effects
+
+Any operation that interacts with the "outside world" outside the scope of a component's rendering process such as:
+- Fetch data from an API
+- Update document title
+- Set localStorage
+- Listen to scroll events
+- Start a timer
+- Console logs 
+
+The `useEffect` hook is used to handle side-effects.
+
+### `useEffect`
+
+```js
+useEffect(() => {
+  // side effect code goes here
+}, [dependencies]);
+```
+- The first argument is a function (the effect).
+- The second argument is the dependency array (controls WHEN the effect runs).
+
+---
+
