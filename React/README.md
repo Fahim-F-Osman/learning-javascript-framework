@@ -174,3 +174,66 @@ function App() {
   );
 }
 ```
+
+---
+
+## Hooks
+In React hooks allow functions to have access to state and other React features without using classes.
+
+### `useState`
+
+useState` is a React Hook that lets you add state to a functional component. 
+
+Allows a component to remember values between renders and update the UI when those values change.
+
+**Syntax**
+```js
+import { useState } from "react";
+
+const [stateVariable, setStateFunction] = useState(initialValue);
+```
+
+- stateVariable: current value stored in the state
+
+- setStateFunction: function to update the value
+
+- initialValue: value when the component first renders
+
+Every time you call setStateFunction(newValue), React re-renders the component automatically with the new state.
+
+## Event-Handlers
+
+React uses camelCase props to handle events.
+- `onClick:` click event
+- `onChange:` input changes
+- `onSubmit:` form submission
+- `onMouseEnter` / `onMouseLeave:` hover events
+
+```js
+const [message, setMessage] = useState("Hi");
+
+<button onClick={() => setMessage("Welcome back!")}>Login</button>
+<p>{message}</p>
+```
+
+- **[Resources for Event Handling](https://react.dev/learn/responding-to-events)**
+
+## Controlled Inputs & Two-way Binding
+- Controlled inputs are inputs whose value is bound to state.
+- Two-way binding where UI and state are always in sync.
+
+```js
+<div className="form">
+  <h1>Count: {count}</h1>
+  <button onClick={handleIncrement}>Increment</button>
+  <button onClick={handleDecrement}>Decrement</button>
+  <hr/>
+  <input
+    type="text"
+    value={text}
+    onChange={handleChange}
+    placeholder="Type something..."
+  />
+  <p>Preview: {text}</p>
+</div>
+```
