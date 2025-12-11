@@ -35,3 +35,31 @@
     background: #ffffff;
   }
 }
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+
+.button-group button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: #fff;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.button-group button:hover {
+  background: #6366f1;
+  transform: translateY(-2px);
+}
+
+.button-group button:active {
+  transform: translateY(0);
+}
