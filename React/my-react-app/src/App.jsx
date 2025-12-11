@@ -1,5 +1,6 @@
 import './App.css'
 import Card from "./components/Card/Card"
+import Form from "./components/Form/Form"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         </Card>
         <Card> <h3>This is a header.</h3><p>This is a text</p> </Card>
       </div>
+      <Form />
     </main>
   )
 
