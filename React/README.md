@@ -340,11 +340,90 @@ npm install react-router-dom
 ```
 
 ### Router Components
-| Component                                   | Purpose                          |
-| ------------------------------------------- | -------------------------------- |
-| `<BrowserRouter>`                           | Wraps your app; enables routing  |
-| `<Routes>`                                  | Wraps all `<Route>`s             |
-| `<Route path="" element={<Component />} />` | Defines a route                  |
-| `<Link to="">`                              | Navigate without page reload     |
-| `useParams()`                               | Access dynamic parameters in URL |
+| Component                                   | Purpose                         |
+| ------------------------------------------- | ------------------------------- |
+| `<BrowserRouter>`                           | Wraps your app; enables routing |
+| `<Routes>`                                  | Wraps all `<Route>`s            |
+| `<Route path="" element={<Component />} />` | Defines a route                 |
+| `<Link to="">`                              | Navigate without page reload    |
+| `<Outlet>`                                  | Placeholder for nested routes   |
+| `useParams()`                               | Access dynamic URL parameters   |
+| `useNavigate()`                             | Programmatic navigation         |
+| `<Navigate to="" />`                        | Redirect to another route       |
 
+---
+
+## Context
+
+Context API is React’s built-in way to share data across many components without having to pass props through every level of the component tree.
+
+Used to globally store:
+- Theme (light/dark)
+- User authentication
+- Language/localization
+- Settings
+
+### Context Components
+| Concept           | Purpose                                           |
+| ----------------- | ------------------------------------------------- |
+| `createContext()` | Creates a context object                          |
+| `<Provider>`      | Wraps components, giving them access to context   |
+| `useContext()`    | Hook to consume context in a component            |
+| `<Consumer>`      | Older API for consuming context (less common now) |
+
+### Usage
+- Create a context folder.
+
+**Create Context**
+
+```js
+// src/context/Theme/ThemeContext.js
+import { createContext } from "react";
+
+// Default value (optional but good for auto-complete / safety)
+export const ThemeContext = createContext({
+  theme: "light",
+  toggleTheme: () => {}
+});
+
+```
+
+**Create Provider**
+
+```js
+// src/context/Theme/ThemeProvider.js
+import { useState, useMemo } from "react";
+import { ThemeContext } from "./ThemeContext";
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "light" ? "dark" : "light"));
+  };
+
+  // Memoize to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({ theme, toggleTheme }), [theme]);
+
+  return (
+    <ThemeContext.Provider value={contextValue}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+```
+
+**Create Custom-Hook**
+```js
+// src/context/Theme/useTheme.js
+import { useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
+```
