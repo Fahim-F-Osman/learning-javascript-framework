@@ -5,11 +5,13 @@ import Form from './components/Form/Form';
 import CSSTest from './components/CSSTest/CSSTest'
 import JokeFetcher from './components/JokeFetcher/JokeFetcher';
 import SignupForm from './components/SignupForm/SignupForm';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Outlet } from "react-router-dom";
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import Products from './pages/Products/Products';
 import ProductDetails from './pages/Products/ProductDetails';
+import Header from "./components/Header/Header";
+import Content from "./components/Header/Content";
 
 function App() {
   const [day, setDay] = useState(0);
@@ -60,6 +62,8 @@ function App() {
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
         </>);
+      case 8:
+        return <><Header/><Content/></>;
       default:
         return null;
     }
@@ -68,14 +72,13 @@ function App() {
   return (
     <main>
      <div className="button-group">
-      {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
         <button key={num} onClick={() => setDay(num)}>
           Day-{num}
         </button>
       ))}
     </div>
       {renderContent()}
-      
     </main>
   );
 }
