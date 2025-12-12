@@ -323,3 +323,28 @@ const [name, setName] = useState("");
 - `onBlur:` check field when leaving input.
 - `onFocus:` when input is clicked.
 
+---
+
+## React - Router
+
+React Router is the standard third-party library for managing routing and navigation in React applications. It allows developers to create single-page applications (SPAs) that can switch between different views or "pages" without requiring a full browser page reload, providing a seamless, multi-page user experience. 
+
+- Each “page” is a route.
+- Navigation is handled by Link instead of `<a>` to prevent full-page reloads.
+- You can define dynamic parameters in URLs like `/product/:id`.
+- You can show a 404 page for unknown routes.
+
+**Installing React Router**
+```bash
+npm install react-router-dom
+```
+
+### Router Components
+| Component                                   | Purpose                          |
+| ------------------------------------------- | -------------------------------- |
+| `<BrowserRouter>`                           | Wraps your app; enables routing  |
+| `<Routes>`                                  | Wraps all `<Route>`s             |
+| `<Route path="" element={<Component />} />` | Defines a route                  |
+| `<Link to="">`                              | Navigate without page reload     |
+| `useParams()`                               | Access dynamic parameters in URL |
+
