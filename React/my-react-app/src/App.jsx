@@ -4,6 +4,7 @@ import Card from './components/Card/Card';
 import Form from './components/Form/Form';
 import CSSTest from './components/CSSTest/CSSTest'
 import JokeFetcher from './components/JokeFetcher/JokeFetcher';
+import SignupForm from './components/SignupForm/SignupForm';
 
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
         return <JokeFetcher />;
       case 5: 
         return <CSSTest/>;
+      case 6: 
+        return <SignupForm/>;  
       default:
         return null;
     }
@@ -44,7 +47,7 @@ function App() {
   return (
     <main>
      <div className="button-group">
-      {[1, 2, 3, 4, 5].map((num) => (
+      {[1, 2, 3, 4, 5, 6].map((num) => (
         <button key={num} onClick={() => setDay(num)}>
           Day-{num}
         </button>

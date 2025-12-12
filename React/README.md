@@ -267,3 +267,59 @@ useEffect(() => {
 
 ---
 
+## CSS Modules
+
+A CSS Module is a CSS file where every class name and identifier is scoped ONLY to the component that imports it.
+- No name conflicts
+- No global leakage
+- No overriding styles accidentally
+
+### Folder Structure
+```cpp
+components/
+  Button.jsx
+  Button.module.css
+  Card.jsx
+  Card.module.css
+```
+
+### Usage
+```js
+import './CSSTest.css'
+import styles from './CSSTest.module.css'
+
+function CSSTest() {
+    return (
+        <>
+        <div className='container'></div>
+        <div className={styles.container}></div>
+        </>
+    )
+    
+}
+
+export default CSSTest
+```
+
+---
+
+## Forms & Validation
+
+### Uncontrolled Input
+The DOM controls the input value for which React does NOT update the value so it's harder to validate.
+
+### Controlled Input
+React controls the input value. Value stored in React state.
+
+```js
+const [name, setName] = useState("");
+
+<input value={name} onChange={(e) => setName(e.target.value)} />
+```
+
+### Event Handlers in Forms
+- `onChange:` for updating input.
+- `onSubmit:` form submission.
+- `onBlur:` check field when leaving input.
+- `onFocus:` when input is clicked.
+
