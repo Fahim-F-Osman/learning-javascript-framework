@@ -2,7 +2,9 @@ import { useState } from 'react';
 import './App.css';
 import Card from './components/Card/Card';
 import Form from './components/Form/Form';
+import CSSTest from './components/CSSTest/CSSTest'
 import JokeFetcher from './components/JokeFetcher/JokeFetcher';
+
 
 function App() {
   const [day, setDay] = useState(0);
@@ -32,6 +34,8 @@ function App() {
         return <Form />;
       case 4:
         return <JokeFetcher />;
+      case 5: 
+        return <CSSTest/>;
       default:
         return null;
     }
@@ -40,7 +44,7 @@ function App() {
   return (
     <main>
      <div className="button-group">
-      {[1, 2, 3, 4].map((num) => (
+      {[1, 2, 3, 4, 5].map((num) => (
         <button key={num} onClick={() => setDay(num)}>
           Day-{num}
         </button>
