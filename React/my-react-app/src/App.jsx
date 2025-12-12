@@ -5,7 +5,11 @@ import Form from './components/Form/Form';
 import CSSTest from './components/CSSTest/CSSTest'
 import JokeFetcher from './components/JokeFetcher/JokeFetcher';
 import SignupForm from './components/SignupForm/SignupForm';
-
+import { Routes, Route, Link } from "react-router-dom";
+import Home from './pages/Home/Home';
+import About from './pages/About/About';
+import Products from './pages/Products/Products';
+import ProductDetails from './pages/Products/ProductDetails';
 
 function App() {
   const [day, setDay] = useState(0);
@@ -39,6 +43,23 @@ function App() {
         return <CSSTest/>;
       case 6: 
         return <SignupForm/>;  
+      case 7:
+        return (
+        <>
+        <nav>
+          <Link to="/">Home</Link> |{" "}
+          <Link to="/about">About</Link> |{" "}
+          <Link to="/products">Products</Link>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="*" element={<h1>404 Not Found</h1>} />
+        </Routes>
+        </>);
       default:
         return null;
     }
@@ -47,13 +68,14 @@ function App() {
   return (
     <main>
      <div className="button-group">
-      {[1, 2, 3, 4, 5, 6].map((num) => (
+      {[1, 2, 3, 4, 5, 6, 7].map((num) => (
         <button key={num} onClick={() => setDay(num)}>
           Day-{num}
         </button>
       ))}
     </div>
       {renderContent()}
+      
     </main>
   );
 }
