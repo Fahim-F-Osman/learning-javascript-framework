@@ -584,3 +584,110 @@ export function useFetch(url) {
 **Note:** When useFetch unmounts, isMounted becomes False. When async finishes, isMounted is false so no memory leak occurs.
 
 ---
+
+## State Management
+
+### Lifting vs Global State
+
+**Lifting State**  
+When a piece of state is needed by multiple components, you “lift” it to the nearest common ancestor.
+
+**Advantage**
+- Keeps state localized to relevant parts of the component tree.
+- Simple and easy to debug.
+
+**Disadvantage**
+- Can get messy if many components need the same state (prop drilling).
+
+**Example:**
+- Two sibling components need access to the same form input value → lift the state to their parent.
+
+**Global State**  
+State stored in a centralized location, accessible by any component.(Context API, Redux, Zustand, Jotai, etc.)
+**Advantage**
+- No prop drilling.
+- Easier to share state across distant components.
+
+**Disadvantage**
+- Overhead if misused.
+- Can make debugging more complex if not structured properly.
+
+**Note:** Context API can cause re-renders which Redux doesn't.
+
+## **`useReducer` Hook**
+React hook used for managing complex state logic - local to a component.  
+It’s an alternative to useState, especially when:
+- State depends on previous state.
+- You have multiple related state variables.
+- You want predictable state updates with a centralized “reducer” function.
+
+### Structure
+```js
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+- **state:** current state object
+- **dispatch:** function used to send an action
+- **reducer:** function that calculates the new state
+- **initialState:** starting value of the state
+
+### Reducer Function
+```js
+function reducer(state, action) {
+  switch(action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+```
+- state → current state
+- action → object describing what should change
+  - Usually has a type property
+  - Can also include payload for data
+- return value → new state (must be immutable)
+
+### Example
+
+```js
+const initialState = { username: '', email: '' };
+
+function reducer(state, action) {
+  switch(action.type) {
+    case 'setField':
+      return { ...state, [action.field]: action.value };
+    case 'reset':
+      return initialState;
+    default:
+      return state;
+  }
+}
+
+function Form() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <form>
+      <input
+        type="text"
+        value={state.username}
+        onChange={(e) =>
+          dispatch({ type: 'setField', field: 'username', value: e.target.value })
+        }
+      />
+      <input
+        type="email"
+        value={state.email}
+        onChange={(e) =>
+          dispatch({ type: 'setField', field: 'email', value: e.target.value })
+        }
+      />
+      <button type="button" onClick={() => dispatch({ type: 'reset' })}>
+        Reset
+      </button>
+    </form>
+  );
+}
+```
