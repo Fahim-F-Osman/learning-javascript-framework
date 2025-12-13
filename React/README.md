@@ -427,3 +427,83 @@ export const useTheme = () => {
   return context;
 };
 ```
+
+---
+
+## React Performance
+
+Re-renders in React occur 
+- Every time state or props change, the component re-renders.
+- All children of that component also re-render by default.
+
+Avoid Unneeded State
+- Store minimal state. Compute everything else as needed.
+
+### React.memo (Component Memoization)
+- **Purpose:** Prevent re-rendering a component if props didn’t change.
+- **Use case:** Lists, cards, tables, complex components.
+
+Example
+```js
+const Item = React.memo(({ name, onClick }) => {
+  console.log("Rendering:", name);
+  return <li onClick={() => onClick(name)}>{name}</li>;
+});
+```
+Now Item only re-renders when name changes
+
+### useMemo (Value Memoization)
+- **Purpose:** Memoizes expensive calculations to avoid recalculating on every render.
+- **Use case:** Filtering, sorting, mapping large arrays.
+
+Example
+```js
+const sortedList = useMemo(() => {
+  return list.sort((a, b) => a - b);
+}, [list]);
+```
+Only recalculates when list changes.
+
+### useCallback (Function Memoization)
+
+- **Purpose:** Prevents creating a new function instance every render, which can break React.memo in child components.
+- **Use case:** Lists, Forms, Modals, Tables, Charts, Maps, Dashboards, Real-time apps, Heavy UI components.
+
+Example
+```js
+const handleClick = useCallback(() => {
+  console.log("Clicked!");
+}, []);
+```
+Now the function stays the same between renders, so memoized children won’t re-render.
+
+### Using Memoziation and Callback
+
+**E-Commerce (Product Lists)**
+
+In a product lists with filters, sorting, and add-to-cart actions, changing a filter or cart state can cause all product cards to re-render, slowing the UI. 
+- Use **React.memo** to prevent product cards from re-rendering unless their data changes. 
+- Use **useMemo** to avoid re-running expensive filter and sort logic on every render.
+- Use **useCallback** to keep add-to-cart handlers stable so they don’t trigger unnecessary re-renders. 
+
+**Chat Applications (Messages)**
+
+In chat apps with hundreds of messages and real-time updates, typing or sending a message can cause all message components to re-render, leading to lag and flicker.
+
+* Use **React.memo** to ensure message bubbles re-render only when the message data changes.
+* Use **useMemo** to keep the message list reference stable and avoid unnecessary processing.
+* Use **useCallback** to keep interaction handlers stable so they don’t trigger re-renders.
+
+**Tables & Dashboards**
+
+In dashboards with large tables, pagination, sorting, and filtering, changing pages or sort order can cause the entire table to re-render, slowing the UI.
+
+* Use **React.memo** to prevent table rows from re-rendering unless row data changes.
+* Use **useMemo** to recompute pagination, filtering, and sorting only when inputs change.
+* Use **useCallback** to keep row action handlers stable and avoid unnecessary re-renders.
+
+**When to Use Performance Enhancers**
+
+Use performance enhancers when rendering large lists, passing functions to memoized child components, performing expensive calculations, or building real-time and data-heavy UIs. Do not use them blindly—only apply them when unnecessary re-renders or performance issues are observed.
+
+---

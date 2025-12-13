@@ -12,6 +12,7 @@ import Products from './pages/Products/Products';
 import ProductDetails from './pages/Products/ProductDetails';
 import Header from "./components/Header/Header";
 import Content from "./components/Header/Content";
+import Performance from "./components/Performance/Performance";
 
 function App() {
   const [day, setDay] = useState(0);
@@ -64,6 +65,8 @@ function App() {
         </>);
       case 8:
         return <><Header/><Content/></>;
+      case 9:
+        return <Performance/>;
       default:
         return null;
     }
@@ -72,7 +75,7 @@ function App() {
   return (
     <main>
      <div className="button-group">
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
         <button key={num} onClick={() => setDay(num)}>
           Day-{num}
         </button>
