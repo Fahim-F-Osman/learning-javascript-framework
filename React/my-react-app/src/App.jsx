@@ -13,6 +13,7 @@ import ProductDetails from './pages/Products/ProductDetails';
 import Header from "./components/Header/Header";
 import Content from "./components/Header/Content";
 import Performance from "./components/Performance/Performance";
+import ReducerForm from './components/ReducerForm/ReducerForm';
 
 function App() {
   const [day, setDay] = useState(0);
@@ -67,6 +68,8 @@ function App() {
         return <><Header/><Content/></>;
       case 9:
         return <Performance/>;
+      case 10:
+        return <ReducerForm/>;
       default:
         return null;
     }
@@ -75,7 +78,7 @@ function App() {
   return (
     <main>
      <div className="button-group">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
         <button key={num} onClick={() => setDay(num)}>
           Day-{num}
         </button>
