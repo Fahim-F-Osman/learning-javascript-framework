@@ -507,3 +507,80 @@ In dashboards with large tables, pagination, sorting, and filtering, changing pa
 Use performance enhancers when rendering large lists, passing functions to memoized child components, performing expensive calculations, or building real-time and data-heavy UIs. Do not use them blindly—only apply them when unnecessary re-renders or performance issues are observed.
 
 ---
+
+## Custom Hook
+
+A custom hook is a normal JavaScript function that:
+
+- Uses React hooks (useState, useEffect, etc.)
+- Starts with the prefix use
+- Extracts reusable logic, not UI
+
+Custom hooks do not return JSX.  
+They return state, data, and functions.
+
+### Why Custom Hooks
+Many components repeat the same logic:
+- Fetching data
+- Loading and error handling
+- Syncing state with localStorage
+- Managing forms or browser events
+
+Without custom hooks:
+- Logic is duplicated
+- Components become large and hard to read
+- Bugs are repeated in multiple places
+
+Custom hooks solve this by separating logic from UI.
+
+### Example
+Fetching data is always repeated and needs:
+- loading state
+- error handling
+- cleanup logic
+- re-fetch when URL changes
+
+**`useFetch()`**
+
+```js
+import { useState, useEffect } from "react";
+
+export function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    setLoading(true);
+    setError(null);
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error("Network error");
+        return res.json();
+      })
+      .then(data => {
+        if (isMounted) setData(data);
+      })
+      .catch(err => {
+        if (isMounted) setError(err.message);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+```
+
+**Note:** When useFetch unmounts, isMounted becomes False. When async finishes, isMounted is false so no memory leak occurs.
+
+---
